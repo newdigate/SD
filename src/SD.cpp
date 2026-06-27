@@ -89,8 +89,12 @@ bool SDClass::begin(uint8_t csPin) {
 	if (csPin == BUILTIN_SDCARD) {
 		bool ret = sdfs.begin(SdioConfig(FIFO_SDIO));
 		cardPreviouslyPresent = ret;
-		#if defined(__IMXRT1062__)
-		// start off with just trying on T4.x
+		#if defined(__IMXRT1062__) && defined(_SD_DAT3)
+		// start off with just trying on T4.x (boards with a built-in-SD DAT3
+		// card-detect pin).  The MIMXRT1060-EVKB's DAT3 (GPIO_SD_B0_05) is not a
+		// numbered Arduino pin, so _SD_DAT3 is undefined there and this is
+		// skipped -- SDIO begin() still runs, matching mediaPresent()/
+		// setMediaDetectPin(), which already guard their _SD_DAT3 use.
 		cdPin_ = _SD_DAT3;
 		if (!ret) {
 			pinMode(_SD_DAT3, INPUT_PULLDOWN);
