@@ -37,7 +37,7 @@
 #endif
 #include <FS.h>
 
-#if defined(__MK64FX512__) || defined(__MK66FX1M0__) || defined(__IMXRT1062__)
+#if defined(__MK64FX512__) || defined(__MK66FX1M0__) || defined(__IMXRT1062__) || defined(__IMXRT1176__)
 #define BUILTIN_SDCARD 254
 #endif
 
